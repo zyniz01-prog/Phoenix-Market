@@ -193,7 +193,7 @@ Link Repository GitHub:
 https://github.com/zyniz01-prog/Phoenix-Market
 
 Link GitHub Pages:  
-
+https://zyniz01-prog.github.io/Phoenix-Market/
 
 ## Dokumentasi Screenshot
 
