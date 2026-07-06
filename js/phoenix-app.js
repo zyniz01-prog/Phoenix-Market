@@ -125,6 +125,18 @@ function getCart() {
 
 function saveCart(cart) {
   localStorage.setItem(cartKey, JSON.stringify(cart));
+  updateCartBadge();
+}
+
+function updateCartBadge() {
+  const badge = document.getElementById("cartBadge");
+  if (!badge) return;
+
+  const cart = getCart();
+  const totalQty = Object.values(cart).reduce((sum, qty) => sum + Number(qty), 0);
+
+  badge.textContent = totalQty;
+  badge.hidden = totalQty === 0;
 }
 
 function addToCart(id) {
@@ -240,27 +252,35 @@ function renderCart() {
 
   cartItems.innerHTML = ids.length ? ids.map(id => {
     const product = products.find(item => item.id === id);
+    if (!product) return "";
     const qty = cart[id];
     const total = product.price * qty;
     subtotal += total;
 
     return `
-      <article class="card">
-        <img src="${product.image}" alt="${product.name}">
-        <small>${product.category}</small>
-        <h3>${product.name}</h3>
-        <p>${rupiah(product.price)}</p>
+      <article class="cart-item-card">
+        <img class="cart-item-image" src="${product.image}" alt="${product.name}">
 
-        <div class="qty-area">
-          <span>Jumlah:</span>
-          <input class="qty-input" type="number" min="1" value="${qty}" onchange="updateQty('${id}', this.value)">
+        <div class="cart-item-info">
+          <h3>${product.name}</h3>
+          <small>${product.category}</small>
+          <p class="cart-item-price">${rupiah(product.price)}</p>
+
+          <div class="qty-area">
+            <button type="button" class="qty-btn" onclick="updateQty('${id}', ${qty - 1})">-</button>
+            <span class="qty-number">${qty}</span>
+            <button type="button" class="qty-btn" onclick="updateQty('${id}', ${qty + 1})">+</button>
+          </div>
         </div>
 
-        <button class="btn-b" onclick="removeItem('${id}')">Hapus Barang</button>
+        <div class="cart-item-action">
+          <span class="item-total">${rupiah(total)}</span>
+          <button class="cart-remove-btn" type="button" onclick="removeItem('${id}')">Hapus</button>
+        </div>
       </article>
     `;
   }).join("") : `
-    <article class="card">
+    <article class="cart-empty-card">
       <h3>Keranjang masih kosong</h3>
       <p>Silakan pilih produk dulu.</p>
       <a class="btn-link" href="IT-II-ZynXiz-Produk.html">Belanja Produk</a>
@@ -284,7 +304,14 @@ function setText(id, text) {
 
 function updateQty(id, qty) {
   const cart = getCart();
-  cart[id] = Number(qty);
+  const newQty = Number(qty);
+
+  if (newQty <= 0) {
+    delete cart[id];
+  } else {
+    cart[id] = newQty;
+  }
+
   saveCart(cart);
   renderCart();
 }
@@ -533,7 +560,10 @@ function renderAdminDashboard() {
   setText("adminRevenue", rupiah(selesai * 9500000));
 }
 
-document.addEventListener("DOMContentLoaded", renderAdminDashboard);
+document.addEventListener("DOMContentLoaded", function () {
+  renderAdminDashboard();
+  updateCartBadge();
+});
 
 function openCheckoutModal() {
   const cart = getCart();
