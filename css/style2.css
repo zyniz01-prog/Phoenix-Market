@@ -1,0 +1,95 @@
+* { box-sizing: border-box;}
+:root {
+    --Utama: #001aff;
+    --Gelap: #050505;
+    --Gelap-2: #000;
+    --Text-Terang: #ffffff;
+    --Text-Abu: #b0b0b0
+}
+body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--Gelap);
+    color: var(--Text-Terang);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.container {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+.title {
+    font-size: 3rem;
+    font-weight: 800;
+    letter-spacing: 8px;
+    text-transform: uppercase;
+    color: var(--Utama);
+    margin: 0;
+    text-shadow: 0 0 20px rgba(0, 161, 255, 0.4);
+}
+.container-content {
+    width: 250px;
+    height: 250px;
+    background: url('../images/pngegg.png') no-repeat center;
+    background-size: contain;
+    filter: drop-shadow(0 0 20px rgba(0, 161, 255, 0.6));
+    transition: transform 0.5s ease;
+}
+.container-content:hover {
+    transform: scale(1.05);
+}
+.f-enter {
+    padding: 15px 45px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--Text-Terang);
+    background: transparent;
+    border: 2px solid var(--Utama);
+    border-radius: 50px;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+.f-enter:hover {
+    background-color: var(--Utama);
+    color: var(--Gelap-2);
+    box-shadow: 0 0 30px rgb(0, 161, 255, 0.6);
+}
+
+@media (max-width: 600px) {
+    .container {
+        gap: 20px;
+        padding: 0 20px;
+    }
+
+    .title {
+        font-size: clamp(1.8rem, 10vw, 2.5rem);
+        letter-spacing: 4px;
+    }
+
+    .container-content {
+        width: 200px;
+        height: 200px;
+    }
+
+    .img-content {
+        width: 180px;
+        height: auto;
+    }
+
+    .f-enter {
+        padding: 12px 30px;
+        font-size: 1rem;
+        letter-spacing: 1px;
+        width: 100%;
+        max-width: 280px;
+    }
+}
