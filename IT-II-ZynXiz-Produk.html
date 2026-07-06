@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Koleksi Produk | Phoenix Market</title>
+    <link rel="stylesheet" href="css/style4.css">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PHOENIX123"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-PHOENIX123');
+    </script>
+</head>
+
+<body class="produk-page">
+
+    <header>
+        <h1 class="e-nama">Phoenix Market</h1>
+        <nav>
+            <a href="index.html">Keluar</a>
+            <a href="IT-II-ZynXiz-Beranda.html">Beranda</a>
+            <a href="IT-II-ZynXiz-Produk.html" style="color: var(--Utama);">Produk</a>
+            <a href="IT-II-ZynXiz-Keranjang.html">Keranjang</a>
+        </nav>
+    </header>
+
+    <main>
+
+        <div class="page-title">
+            <h1>Koleksi Produk</h1>
+            <p>Temukan gadget dan aksesoris terbaik di Phoenix Market.</p>
+        </div>
+
+        <div class="filter-container">
+            <input id="searchProduct" class="btn-filter input-filter" type="search" placeholder="Cari produk...">
+
+            <select id="categoryFilter" class="btn-filter">
+                <option>Semua</option>
+                <option>Gadget</option>
+                <option>Elektronik</option>
+                <option>Aksesoris</option>
+            </select>
+
+            <select id="priceFilter" class="btn-filter">
+                <option>Semua</option>
+                <option>Murah</option>
+                <option>Menengah</option>
+                <option>Premium</option>
+            </select>
+
+            <button id="resetFilter" class="btn-filter" type="button">Reset</button>
+        </div>
+
+        <p id="emptyProduct" class="empty-state" hidden>Produk tidak ditemukan.</p>
+
+        <div class="produk-container" id="productGrid"></div>
+    </main>
+
+    <footer>
+        <div class="footer-grid">
+            <div>
+                <h3>Phoenix Market</h3>
+                <p>Marketplace gadget dan elektronik untuk kebutuhan digital modern.</p>
+            </div>
+
+            <div>
+                <h3>Navigasi</h3>
+                <p>
+                    <a href="IT-II-ZynXiz-Beranda.html">Beranda</a><br>
+                    <a href="IT-II-ZynXiz-Produk.html">Produk</a><br>
+                    <a href="IT-II-ZynXiz-Keranjang.html">Keranjang</a><br>
+                    <a href="IT-II-ZynXiz-Admin.html">Admin</a>
+                </p>
+            </div>
+
+            <div>
+                <h3>Hubungi Kami</h3>
+                <p>Email: info@MyPhoenix.com<br>WA: 0821-1528-7095</p>
+            </div>
+        </div>
+
+        <p>&copy; 2026 Phoenix Market. All Rights Reserved.</p>
+    </footer>
+
+    <div id="productModal" class="product-modal" hidden>
+        <div class="modal-backdrop" onclick="closeDetail()"></div>
+
+        <article class="modal-content">
+            <button class="modal-close" type="button" onclick="closeDetail()">X</button>
+
+            <img id="modalImage" src="" alt="Detail produk">
+            <small id="modalCategory"></small>
+            <h2 id="modalName"></h2>
+            <p id="modalDescription"></p>
+            <h3 id="modalPrice"></h3>
+
+            <button id="modalAddCart" class="btn-buy" type="button">
+                Tambah ke Keranjang
+            </button>
+        </article>
+    </div>
+
+    <script src="js/phoenix-app.js"></script>
+
+</body>
+
+</html>
