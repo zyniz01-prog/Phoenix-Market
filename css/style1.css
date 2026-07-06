@@ -50,6 +50,20 @@ nav a:hover {
     color: var(--Utama);
 }
 
+#cartBadge {
+    display: inline-grid;
+    place-items: center;
+    min-width: 24px;
+    height: 24px;
+    margin-left: 6px;
+    padding: 0 7px;
+    border-radius: 999px;
+    background: var(--Utama);
+    color: #000;
+    font-size: 0.8rem;
+    font-weight: 900;
+}
+
 .section-1 {
     padding: 80px 20px;
     text-align: center;
