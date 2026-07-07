@@ -38,6 +38,8 @@ header {
 }
 
 nav a {
+  display: inline-flex;
+  align-items: center;
   color: var(--Text-Terang);
   margin-left: 25px;
   text-decoration: none;
@@ -55,6 +57,7 @@ nav a.active {
 #cartBadge {
   display: inline-grid;
   place-items: center;
+  flex: 0 0 auto;
   min-width: 24px;
   height: 24px;
   margin-left: 6px;
@@ -64,6 +67,11 @@ nav a.active {
   color: #000;
   font-size: 0.8rem;
   font-weight: 900;
+  line-height: 1;
+}
+
+#cartBadge[hidden] {
+  display: none;
 }
 
 .page-title {
@@ -210,6 +218,14 @@ footer {
   nav a {
     margin-left: 0;
     font-size: 0.8rem;
+  }
+
+  #cartBadge {
+    min-width: 20px;
+    height: 20px;
+    margin-left: 4px;
+    padding: 0 6px;
+    font-size: 0.7rem;
   }
 
   .page-title h1 {
@@ -797,4 +813,3 @@ textarea.checkout-input {
   margin: 15px auto;
   background: var(--Gelap-2);
 }
-
