@@ -94,20 +94,20 @@
 
             <h2>Checkout</h2>
 
-            <form id="checkoutForm" class="checkout-popup-layout">
+            <form id="checkoutForm" class="checkout-popup-layout" autocomplete="off">
                 <div class="checkout-left">
                     <h3>Informasi Pengiriman</h3>
 
                     <div class="form-row">
-                        <input class="checkout-input" type="text" id="nama" placeholder="Nama lengkap" required>
-                        <input class="checkout-input" type="text" id="telepon" placeholder="Nomor telepon" required>
+                        <input class="checkout-input" type="text" id="nama" name="checkout_nama" placeholder="Nama lengkap" autocomplete="new-password" required>
+                        <input class="checkout-input" type="tel" id="telepon" name="checkout_telepon" placeholder="Nomor telepon" autocomplete="new-password" required>
                     </div>
 
-                    <textarea class="checkout-input" id="alamat" placeholder="Alamat lengkap" required></textarea>
+                    <textarea class="checkout-input" id="alamat" name="checkout_alamat" placeholder="Alamat lengkap" autocomplete="new-password" required></textarea>
 
                     <div class="form-row">
-                        <input class="checkout-input" type="text" id="kota" placeholder="Kota / Kabupaten" required>
-                        <input class="checkout-input" type="text" id="kodepos" placeholder="Kode pos" required>
+                        <input class="checkout-input" type="text" id="kota" name="checkout_kota" placeholder="Kota / Kabupaten" autocomplete="new-password" required>
+                        <input class="checkout-input" type="text" id="kodepos" name="checkout_kodepos" placeholder="Kode pos" autocomplete="new-password" required>
                     </div>
 
                     <h3>Metode Pembayaran</h3>
