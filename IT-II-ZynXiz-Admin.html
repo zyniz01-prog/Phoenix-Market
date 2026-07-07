@@ -62,7 +62,7 @@
             <option>Aksesoris</option>
           </select>
 
-          <input class="checkout-input" type="file" id="adminProductImage" accept="image/*">
+          <input class="checkout-input" type="file" id="adminProductImage" accept="images/*">
 
           <img id="previewImage" src="images/pngegg.png" alt="Preview Gambar">
 
@@ -85,28 +85,7 @@
         <small>Pesanan Terbaru</small>
         <h3>Status Pesanan</h3>
 
-        <div id="adminOrderList">
-          <div class="order-row" data-order>
-            <p><strong>#PM001</strong> - Alek</p>
-            <small>Midtrans Virtual Account / E-Wallet</small>
-            <p>Status: <span data-status>Menunggu Pembayaran</span></p>
-            <button class="btn-buy" type="button" onclick="updateOrderStatus(this)">Update Status</button>
-          </div>
-
-          <div class="order-row" data-order>
-            <p><strong>#PM002</strong> - Bobon</p>
-            <small>Transfer Bank Manual</small>
-            <p>Status: <span data-status>Diproses</span></p>
-            <button class="btn-buy" type="button" onclick="updateOrderStatus(this)">Update Status</button>
-          </div>
-
-          <div class="order-row" data-order>
-            <p><strong>#PM003</strong> - Jhoni</p>
-            <small>Midtrans Virtual Account / E-Wallet</small>
-            <p>Status: <span data-status>Selesai</span></p>
-            <button class="btn-buy" type="button" onclick="updateOrderStatus(this)">Update Status</button>
-          </div>
-        </div>
+        <div id="adminOrderList"></div>
       </article>
     </section>
   </main>
