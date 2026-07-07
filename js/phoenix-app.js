@@ -100,6 +100,7 @@ let products = [
 ];
 
 const cartKey = "phoenix-cart";
+const orderKey = "phoenix-orders";
 
 function getAdminProducts() {
   return JSON.parse(localStorage.getItem("phoenix-admin-products") || "[]");
@@ -126,6 +127,14 @@ function getCart() {
 function saveCart(cart) {
   localStorage.setItem(cartKey, JSON.stringify(cart));
   updateCartBadge();
+}
+
+function getOrders() {
+  return JSON.parse(localStorage.getItem(orderKey) || "[]");
+}
+
+function saveOrders(orders) {
+  localStorage.setItem(orderKey, JSON.stringify(orders));
 }
 
 function updateCartBadge() {
@@ -342,20 +351,62 @@ if (checkoutForm) {
       return;
     }
 
+    const order = createOrder(cart);
+    saveOrders([order, ...getOrders()]);
+
     closeCheckoutModal();
-    showSuccessModal();
+    showSuccessModal(order.id);
     localStorage.removeItem(cartKey);
     checkoutForm.reset();
     renderCart();
   });
 }
 
-function showSuccessModal() {
+function createOrder(cart) {
+  const items = Object.keys(cart).map(id => {
+    const product = products.find(item => item.id === id);
+    if (!product) return null;
+
+    const qty = Number(cart[id]);
+    return {
+      id: product.id,
+      name: product.name,
+      category: product.category,
+      price: product.price,
+      qty,
+      total: product.price * qty
+    };
+  }).filter(Boolean);
+
+  const subtotal = items.reduce((sum, item) => sum + item.total, 0);
+  const admin = subtotal > 0 ? 10000 : 0;
+  const discount = subtotal >= 5000000 ? subtotal * 0.05 : 0;
+  const total = subtotal + admin - discount;
+  const payment = document.querySelector("input[name='payment']:checked")?.value || "Belum dipilih";
+  const randomNumber = Math.floor(100000 + Math.random() * 900000);
+
+  return {
+    id: "#PM" + randomNumber,
+    buyer: document.getElementById("nama")?.value.trim() || "Pelanggan",
+    phone: document.getElementById("telepon")?.value.trim() || "-",
+    city: document.getElementById("kota")?.value.trim() || "-",
+    address: document.getElementById("alamat")?.value.trim() || "-",
+    payment,
+    subtotal,
+    admin,
+    discount,
+    total,
+    status: "Menunggu Pembayaran",
+    items,
+    createdAt: new Date().toISOString()
+  };
+}
+
+function showSuccessModal(orderId) {
   const modal = document.getElementById("successModal");
   const orderNumber = document.getElementById("orderNumber");
 
-  const randomNumber = Math.floor(100000 + Math.random() * 900000);
-  orderNumber.textContent = "#PM" + randomNumber;
+  orderNumber.textContent = orderId || "#PM000000";
 
   modal.classList.add("show");
 }
@@ -534,30 +585,57 @@ function renderAdminProductList() {
 
 const orderStatuses = ["Menunggu Pembayaran", "Diproses", "Dikirim", "Selesai"];
 
-function updateOrderStatus(button) {
-  const order = button.closest("[data-order]");
-  if (!order) return;
+function updateOrderStatus(orderId) {
+  const orders = getOrders().map(order => {
+    if (order.id !== orderId) return order;
 
-  const statusText = order.querySelector("[data-status]");
-  const currentStatus = statusText.textContent;
-  const currentIndex = orderStatuses.indexOf(currentStatus);
-  const nextStatus = orderStatuses[(currentIndex + 1) % orderStatuses.length];
+    const currentIndex = orderStatuses.indexOf(order.status);
+    const nextStatus = orderStatuses[(currentIndex + 1) % orderStatuses.length];
 
-  statusText.textContent = nextStatus;
+    return { ...order, status: nextStatus };
+  });
+
+  saveOrders(orders);
   renderAdminDashboard();
+}
+
+function renderAdminOrderList() {
+  const list = document.getElementById("adminOrderList");
+  if (!list) return;
+
+  const orders = getOrders();
+
+  if (orders.length === 0) {
+    list.innerHTML = "<p>Belum ada pesanan masuk.</p>";
+    return;
+  }
+
+  list.innerHTML = orders.map(order => {
+    const itemCount = order.items?.reduce((sum, item) => sum + Number(item.qty), 0) || 0;
+
+    return `
+      <div class="order-row" data-order>
+        <p><strong>${order.id}</strong> - ${order.buyer}</p>
+        <small>${order.payment}</small>
+        <p>Kota: ${order.city} | Item: ${itemCount}</p>
+        <p>Total: <strong>${rupiah(order.total)}</strong></p>
+        <p>Status: <span data-status>${order.status}</span></p>
+        <button class="btn-buy" type="button" onclick="updateOrderStatus('${order.id}')">Update Status</button>
+      </div>
+    `;
+  }).join("");
 }
 
 function renderAdminDashboard() {
   setText("adminProductCount", products.length + " Produk");
 
-  const orders = document.querySelectorAll("[data-order]");
+  const orders = getOrders();
   setText("adminOrderCount", orders.length + " Pesanan");
 
-  const selesai = [...orders].filter(order => {
-    return order.querySelector("[data-status]")?.textContent === "Selesai";
-  }).length;
+  const revenue = orders.reduce((sum, order) => sum + Number(order.total || 0), 0);
 
-  setText("adminRevenue", rupiah(selesai * 9500000));
+  setText("adminRevenue", rupiah(revenue));
+  renderAdminOrderList();
 }
 
 document.addEventListener("DOMContentLoaded", function () {
