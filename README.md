@@ -185,7 +185,7 @@ Phoenix-Market/
     `-- dokumentasi tampilan website
 ```
 
-## Rencana Deployment
+## Deployment
 
 Website dipublikasikan menggunakan GitHub Pages.
 
@@ -194,6 +194,12 @@ https://github.com/zyniz01-prog/Phoenix-Market
 
 Link GitHub Pages:  
 https://zyniz01-prog.github.io/Phoenix-Market/
+
+## Video Demo
+
+Video demo website Phoenix Market dapat dilihat melalui link berikut:
+
+https://youtu.be/r0f2sGhc2fE?si=Hk3QTdp_uioKxNKP
 
 ## Dokumentasi Screenshot
 
